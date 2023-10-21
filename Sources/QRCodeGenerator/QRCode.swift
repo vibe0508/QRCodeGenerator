@@ -66,10 +66,10 @@ public struct QRCode {
     
     /// The modules of this QR Code (false = white, true = black).
     /// Immutable after constructor finishes. Accessed through subscript(x, y).
-    private var modules: [[Bool]]
+    public private(set) var modules: [[Bool]]
     
     /// Indicates function modules that are not subjected to masking. Discarded when constructor finishes.
-    private var isFunction: [[Bool]]
+    public private(set) var isFunction: [[Bool]]
     
     // MARK: - Output functions
     
@@ -247,7 +247,7 @@ public struct QRCode {
         }
         
         // Create the QR Code object
-        return try QRCode(version: version, correctionLevel: ecl, dataCodewords: dataCodewords, mask: mask)
+        return try QRCode.init(version: version, correctionLevel: ecl, dataCodewords: dataCodewords, mask: mask)
     }
     
     static func checkVersion(minVersion: Int, maxVersion: Int) throws {
@@ -304,7 +304,7 @@ public struct QRCode {
         applyMask(mask)  // Apply the final choice of mask
         drawFormatBits(mask)  // Overwrite old format bits
         
-        isFunction.removeAll()
+//        isFunction.removeAll()
     }
 
     // MARK: - Private helper methods for constructor: Drawing function modules
